@@ -24,11 +24,6 @@
         "format": "eslint src/**/*.ts --fix",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "yarn lint"
-        }
-    },
     "keywords": [],
     "author": "Genilson fernandes",
     "license": "ISC",
