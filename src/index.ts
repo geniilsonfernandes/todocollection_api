@@ -1,13 +1,14 @@
-import express, { Application, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from "express";
+import { AppDataSource } from "./data-source";
+import routes from "./routes";
+import { AppError } from "./utils/error/AppError";
 
-// Boot express
-const app: Application = express();
-const port = 5000;
+AppDataSource.initialize().then(() => {
+  const app = express();
 
-// Application routing
-app.use('/', (req: Request, res: Response) => {
-  res.status(200).send({ data: 'Hello from Ornio AS' });
+  app.use(express.json());
+
+  app.use(routes);
+
+  return app.listen(process.env.PORT);
 });
-
-// Start server
-app.listen(port, () => console.log(`Server is listening on port ${port}!`));
