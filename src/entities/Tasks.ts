@@ -1,16 +1,16 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import { Collections } from "./Collections";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import { Collections } from './Collections'
 
-@Entity("tasks")
+@Entity('tasks')
 class Tasks {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string
 
   @Column()
-  name: string;
+  name: string
 
   @OneToMany(() => Collections, (collection) => collection.user)
-  collections: Collections[];
+  collections: Collections[]
 }
 
-export { Tasks };
+export { Tasks }

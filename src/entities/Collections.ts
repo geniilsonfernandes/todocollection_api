@@ -4,23 +4,23 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
-} from "typeorm";
-import { Users } from "./Users";
-import { Tasks } from "./Tasks";
+} from 'typeorm'
+import { Users } from './Users'
+import { Tasks } from './Tasks'
 
-@Entity("collections")
+@Entity('collections')
 class Collections {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string
 
-  @Column({ type: "text" })
-  name: string;
+  @Column({ type: 'text' })
+  name: string
 
   @ManyToOne(() => Users, (user) => user.collections)
-  user: Users;
+  user: Users
 
   @OneToMany(() => Tasks, (task) => task.collections)
-  tasks: Tasks[];
+  tasks: Tasks[]
 }
 
-export { Collections };
+export { Collections }
