@@ -1,23 +1,14 @@
 import { Request, Response } from 'express'
-import { collectionsRepository } from '../../repositories/collectionsRepository'
-import { AppError } from '../../utils/error/AppError'
+import { collectionsService } from '../../service'
 import { errorHandler } from '../../utils/error/errorHandler'
 
 class CollectioDeleteController {
   async handle(request: Request, response: Response) {
     try {
       const { id } = request.params as { id: string }
-      const collection = await collectionsRepository.findOneBy({
-        id,
-      })
+      const deleteCollection = await collectionsService.DeleteCollection(id)
 
-      if (!collection) {
-        throw new AppError('Collection not found', 404)
-      }
-
-      await collectionsRepository.delete(collection)
-
-      response.status(200).json({ message: 'Collection deleted successfully' })
+      return response.status(200).json(deleteCollection)
     } catch (error) {
       errorHandler(error, response)
     }

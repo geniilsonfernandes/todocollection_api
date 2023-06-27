@@ -1,34 +1,21 @@
 import { Request, Response } from 'express'
-import { collectionsRepository } from '../../repositories/collectionsRepository'
+import { collectionsService } from '../../service'
+import { errorHandler } from '../../utils/error/errorHandler'
 
 class CollectionUpdateController {
   async handle(request: Request, response: Response) {
     const { id } = request.params as { id: string }
     const { name, description } = request.body
 
-    if (!name || !description) {
-      return response.status(400).json({ message: 'Missing required data' })
-    }
-
     try {
-      const collection = await collectionsRepository.findOneBy({
-        id,
+      const update = await collectionsService.UpdateCollection({
+        collection_id: id,
+        data: { name, description },
       })
 
-      console.log(collection)
-
-      if (!collection) {
-        return response.status(404).json({ message: 'Collection not found' })
-      }
-
-      collection.name = name
-      collection.description = description
-
-      await collectionsRepository.save(collection)
-
-      response.status(200).json({ message: 'Collection updated successfully' })
+      return response.status(200).json(update)
     } catch (error) {
-      return response.status(500).json({ message: `Internal Sever Error` })
+      errorHandler(error, response)
     }
   }
 }

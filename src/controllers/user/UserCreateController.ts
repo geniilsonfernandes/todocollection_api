@@ -9,8 +9,6 @@ class UserCreateController {
       const user = await userService.CreateUser({ nickname, password, email })
       return response.status(201).json(user)
     } catch (error) {
-      console.log(error)
-
       errorHandler(error, response)
     }
   }

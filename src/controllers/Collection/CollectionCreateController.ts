@@ -1,38 +1,22 @@
 import { Request, Response } from 'express'
-import { collectionsRepository } from '../../repositories/collectionsRepository'
-import { userRepository } from '../../repositories/userRepository'
+import { collectionsService } from '../../service'
+import { errorHandler } from '../../utils/error/errorHandler'
 
 class CollectionCreateController {
   async handle(request: Request, response: Response) {
-    const { name, description } = request.body
-    const user_id = request.user.id
-
-    if (!name || !description) {
-      return response.status(400).json({ message: 'Missing required data' })
-    }
-
     try {
-      const user = await userRepository.findOneBy({
-        id: user_id,
-      })
+      const { name, description } = request.body
+      const user_id = request.user.id
 
-      if (!user) {
-        return response.status(404).json({ message: 'User not found' })
-      }
-
-      const colletion = collectionsRepository.create({
-        name,
+      const colletion = await collectionsService.CreateCollection({
         description,
-        user: user,
+        name,
+        user_id,
       })
 
-      await collectionsRepository.save(colletion)
-
-      response.status(201).json({ message: 'Collection created successfully' })
+      return response.status(201).json(colletion)
     } catch (error) {
-      console.log(error)
-
-      return response.status(500).json({ message: `Internal Sever Error` })
+      errorHandler(error, response)
     }
   }
 }
