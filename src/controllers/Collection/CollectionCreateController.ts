@@ -6,6 +6,12 @@ class CollectionCreateController {
   async handle(request: Request, response: Response) {
     const { name, description } = request.body
 
+    console.log('rer')
+
+    if (!name || !description) {
+      return response.status(400).json({ message: 'Missing required data' })
+    }
+
     try {
       const user = await userRepository.findOneBy({
         id: 'c4866d0b-1b41-40a4-93ef-7d02adebd51c',
