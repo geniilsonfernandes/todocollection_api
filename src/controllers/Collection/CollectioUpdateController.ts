@@ -15,6 +15,8 @@ class CollectionUpdateController {
         id,
       })
 
+      console.log(collection)
+
       if (!collection) {
         return response.status(404).json({ message: 'Collection not found' })
       }

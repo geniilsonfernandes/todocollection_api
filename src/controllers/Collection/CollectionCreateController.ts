@@ -5,8 +5,7 @@ import { userRepository } from '../../repositories/userRepository'
 class CollectionCreateController {
   async handle(request: Request, response: Response) {
     const { name, description } = request.body
-
-    console.log('rer')
+    const user_id = request.user.id
 
     if (!name || !description) {
       return response.status(400).json({ message: 'Missing required data' })
@@ -14,7 +13,7 @@ class CollectionCreateController {
 
     try {
       const user = await userRepository.findOneBy({
-        id: 'c4866d0b-1b41-40a4-93ef-7d02adebd51c',
+        id: user_id,
       })
 
       if (!user) {

@@ -3,12 +3,12 @@ import { collectionsRepository } from '../../repositories/collectionsRepository'
 
 class CollectionListController {
   async handle(request: Request, response: Response) {
-    const userid = 'c4866d0b-1b41-40a4-93ef-7d02adebd51c'
+    const user_id = request.user.id
 
     try {
       const collections = await collectionsRepository.findBy({
         user: {
-          id: userid,
+          id: user_id,
         },
       })
 
