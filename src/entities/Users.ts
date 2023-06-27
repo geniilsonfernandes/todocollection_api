@@ -7,10 +7,13 @@ class Users {
   id: string
 
   @Column({ type: 'text' })
-  name: string
+  nickname: string
 
   @Column({ type: 'text' })
   password: string
+
+  @Column({ type: 'text' })
+  email: string
 
   @OneToMany(() => Collections, (collection) => collection.user)
   collections: Collections[]
