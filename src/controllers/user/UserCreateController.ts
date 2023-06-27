@@ -1,38 +1,17 @@
 import { Request, Response } from 'express'
-import { userRepository } from '../../repositories/userRepository'
-import { hash } from 'bcrypt'
+import { userService } from '../../service'
+import { errorHandler } from '../../utils/error/errorHandler'
 
 class UserCreateController {
-  async handle(req: Request, res: Response) {
-    const { nickname, password, email } = req.body
-
+  async handle(request: Request, response: Response) {
     try {
-      const nicknameAlreadyExists = await userRepository.findOne({
-        where: { nickname },
-      })
-
-      if (nicknameAlreadyExists)
-        return res.status(400).json({ message: 'Nickname already exists' })
-
-      const passwordHash = await hash(password, 8)
-
-      const newUser = userRepository.create({
-        nickname: nickname,
-        password: passwordHash,
-        email: email,
-      })
-
-      await userRepository.save(newUser)
-      return res.status(201).json({
-        message: 'User created successfully',
-        user: {
-          id: newUser.id,
-          nickname: newUser.nickname,
-          email: newUser.email,
-        },
-      })
+      const { nickname, password, email } = request.body
+      const user = await userService.CreateUser({ nickname, password, email })
+      return response.status(201).json(user)
     } catch (error) {
-      return res.status(500).json({ message: 'Internal Sever Error' })
+      console.log(error)
+
+      errorHandler(error, response)
     }
   }
 }
