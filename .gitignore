@@ -1,3 +1,9 @@
 node_modules
 .DS_Store
 .env
+
+
+# yarn 
+yarn-error.log
+yarn.lock
+.yarn-integrity
