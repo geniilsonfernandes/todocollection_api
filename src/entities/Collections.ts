@@ -16,11 +16,11 @@ class Collections {
   @Column({ type: 'text' })
   name: string
 
+  @Column({ type: 'text' })
+  description: string
+
   @ManyToOne(() => Users, (user) => user.collections)
   user: Users
-
-  @OneToMany(() => Tasks, (task) => task.collections)
-  tasks: Tasks[]
 }
 
 export { Collections }

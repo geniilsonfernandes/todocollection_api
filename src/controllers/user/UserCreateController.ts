@@ -2,8 +2,8 @@ import { Request, Response } from 'express'
 import { userRepository } from '../../repositories/userRepository'
 import { hash } from 'bcrypt'
 
-class UserController {
-  async create(req: Request, res: Response) {
+class UserCreateController {
+  async handle(req: Request, res: Response) {
     const { nickname, password, email } = req.body
 
     try {
@@ -37,4 +37,4 @@ class UserController {
   }
 }
 
-export { UserController }
+export { UserCreateController }
