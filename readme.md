@@ -1,3 +1,5 @@
+<img src="./banner.jpg">
+
 # API de TodoList
 
 Esta API permite que você gerencie uma lista de tarefas (todos). Você pode criar, atualizar, recuperar e excluir tarefas por meio dos endpoints criados. Podemos tambem cria uma coleção de tarefas.
@@ -14,6 +16,7 @@ Para começar a usar a API de TodoList, você precisará realizar algumas etapas
 A API de TodoList estará disponível em `http://localhost:3000`.
 
 ## Exemplos de algums dos endpoints da API
+
 
 ### usuários
 
