@@ -42,9 +42,18 @@ class TasksService {
   }
 
   public async ListTasks(collection_id: string): Promise<Tasks[]> {
-    const tasks = await tasksRepository.findBy({
-      collections: {
-        id: collection_id,
+    if (!collection_id) {
+      throw new AppError('Missing parameters', 400)
+    }
+
+    const tasks = await tasksRepository.find({
+      order: {
+        created_at: 'DESC',
+      },
+      where: {
+        collections: {
+          id: collection_id,
+        },
       },
     })
 
