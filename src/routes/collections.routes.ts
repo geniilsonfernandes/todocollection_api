@@ -13,11 +13,7 @@ const collectioDeleteController = new CollectioDeleteController()
 const collections = Router()
 
 collections.get('/', EnsureAuthenticated, collectionListController.handle)
-collections.post(
-  '/create',
-  EnsureAuthenticated,
-  collectionCreateController.handle,
-)
+collections.post('/', EnsureAuthenticated, collectionCreateController.handle)
 collections.put('/:id', EnsureAuthenticated, collectionUpdateController.handle)
 collections.delete(
   '/:id',

@@ -1,12 +1,15 @@
 import { Request, Response } from 'express'
 import { collectionsService } from '../../service'
 import { errorHandler } from '../../utils/error/errorHandler'
+import { collectionBodyValidate } from './validations'
 
 class CollectionCreateController {
   async handle(request: Request, response: Response) {
     try {
-      const { name, description } = request.body
       const user_id = request.user.id
+      const { name, description } = request.body
+
+      await collectionBodyValidate.validate(request.body, { abortEarly: false })
 
       const colletion = await collectionsService.CreateCollection({
         description,

@@ -16,7 +16,7 @@ const taskDeleteController = new TaskDeleteController()
 
 tasks.get('/', EnsureAuthenticated, taksListController.handle)
 tasks.post('/create', EnsureAuthenticated, taskCreateController.handle)
-tasks.patch('/status', EnsureAuthenticated, taskStatusController.handle)
+tasks.patch('/:id/status', EnsureAuthenticated, taskStatusController.handle)
 tasks.put('/:id', EnsureAuthenticated, taskUpdateController.handle)
 tasks.delete('/:id', EnsureAuthenticated, taskDeleteController.handle)
 

@@ -4,7 +4,7 @@ import { tasksRepository } from '../repositories/tasksRepository'
 import { IMessageResponse } from '../shared/types/IMessage'
 import { AppError } from '../utils/error/AppError'
 
-interface ITasksCreateRequest {
+export interface ITasksCreateRequest {
   name: string
   description: string
   collection_id: string
@@ -90,6 +90,7 @@ class TasksService {
 
     task.name = data.name
     task.description = data.description
+    task.is_completed = data.is_completed
 
     await tasksRepository.save(task)
 

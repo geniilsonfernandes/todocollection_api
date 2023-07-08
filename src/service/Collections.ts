@@ -22,10 +22,6 @@ class CollectionsService {
   public async CreateCollection(
     data: ICollectionsCreateRequest,
   ): Promise<IMessageResponse> {
-    if (!data.description || !data.name) {
-      throw new AppError('Missing parameters', 400)
-    }
-
     const user = await userRepository.findOneBy({
       id: data.user_id,
     })
@@ -86,10 +82,6 @@ class CollectionsService {
     data,
   }: ICollectionsUpdateRequest): Promise<IMessageResponse> {
     const { name, description } = data
-
-    if (!name || !description) {
-      throw new AppError('Missing required data', 400)
-    }
 
     const collection = await collectionsRepository.findOne({
       where: {

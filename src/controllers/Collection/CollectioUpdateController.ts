@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { collectionsService } from '../../service'
 import { errorHandler } from '../../utils/error/errorHandler'
+import { collectionUpdateValidate } from './validations'
 
 class CollectionUpdateController {
   async handle(request: Request, response: Response) {
@@ -8,6 +9,10 @@ class CollectionUpdateController {
     const { name, description } = request.body
 
     try {
+      await collectionUpdateValidate.validate(request.body, {
+        abortEarly: false,
+      })
+
       const update = await collectionsService.UpdateCollection({
         collection_id: id,
         data: { name, description },
