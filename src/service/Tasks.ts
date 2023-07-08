@@ -106,7 +106,10 @@ class TasksService {
     }
   }
 
-  public async CompleteTask(task_id: string): Promise<IMessageResponse> {
+  public async CompleteTask(
+    task_id: string,
+    status: boolean,
+  ): Promise<IMessageResponse> {
     const task = await tasksRepository.findOne({
       where: {
         id: task_id,
@@ -117,7 +120,7 @@ class TasksService {
       throw new AppError('Task not found', 404)
     }
 
-    task.is_completed = true
+    task.is_completed = status
 
     await tasksRepository.save(task)
 
