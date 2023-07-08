@@ -99,17 +99,11 @@ class TasksService {
   }
 
   public async DeleteTask(task_id: string): Promise<IMessageResponse> {
-    const task = await tasksRepository.findOne({
-      where: {
-        id: task_id,
-      },
-    })
-
-    if (!task) {
-      throw new AppError('Task not found', 404)
+    if (!task_id) {
+      throw new AppError('Missing parameters', 400)
     }
 
-    await tasksRepository.delete(task)
+    await tasksRepository.delete(task_id)
 
     return {
       message: 'Task deleted successfully',
