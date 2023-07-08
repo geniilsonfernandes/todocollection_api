@@ -1,6 +1,6 @@
 # API de TodoList
 
-Bem-vindo à API de TodoList! Esta API permite que você gerencie uma lista de tarefas (todos). Você pode criar, atualizar, recuperar e excluir tarefas por meio dos endpoints fornecidos. O formato de comunicação com a API é JSON.
+Esta API permite que você gerencie uma lista de tarefas (todos). Você pode criar, atualizar, recuperar e excluir tarefas por meio dos endpoints criados. Podemos tambem cria uma coleção de tarefas.
 
 ## Configuração
 
@@ -8,93 +8,88 @@ Para começar a usar a API de TodoList, você precisará realizar algumas etapas
 
 1. Certifique-se de ter uma versão recente do Node.js instalada em seu ambiente.
 2. Clone o repositório da API de TodoList para sua máquina local.
-3. Navegue até o diretório da API e execute o comando `npm install` para instalar todas as dependências necessárias.
-4. Inicie o servidor executando o comando `npm start`.
+3. Navegue até o diretório da API e execute o comando `yarn` para instalar todas as dependências necessárias.
+4. Inicie o servidor executando o comando `yarn dev`.
 
 A API de TodoList estará disponível em `http://localhost:3000`.
 
-## Endpoints
+## Exemplos de algums dos endpoints da API
 
-### Listar tarefas
+### usuários
+
+Criar um usuário
+
+- **URL**: `/user/create`
+- **Método**: `POST`
+- **Corpo da requisição**:
+
+```json
+{
+  "nickname": "g3232e",
+  "email": "genilso@gmail.com",
+  "password": "dsff34343"
+}
+```
+
+Autenticar um usuário
+
+- **URL**: `/user/auth`
+- **Método**: `POST`
+- **Corpo da requisição**:
+
+```json
+{
+  "password": "dsff3434343",
+  "nickname": "genilson"
+}
+```
+
+### Cria uma nova coleção
 
 Retorna uma lista de todas as tarefas cadastradas.
 
-- **URL**: `/todos`
+- **URL**: `/collections`
+- **Método**: `POST`
+- **Resposta de exemplo**:
+
+```json
+{
+  "name": "hora",
+  "description": "tarefas de faculdade"
+}
+```
+
+Listar todas as coleções
+
+- **URL**: `/collections`
 - **Método**: `GET`
 - **Resposta de exemplo**:
+
 ```json
 [
   {
-    "id": 1,
-    "title": "Fazer compras",
-    "completed": false
-  },
-  {
-    "id": 2,
-    "title": "Estudar para a prova",
-    "completed": true
+    "id": "345cc988-2c2f-4bc2-bff7-3494d3d96173",
+    "name": "tarefas de casa",
+    "description": "tarefas de casa",
+    "created_at": "2023-07-08T22:41:04.176Z",
+    "updated_at": "2023-07-08T22:41:04.176Z"
   }
 ]
-```
-
-### Criar uma nova tarefa
-
-Cria uma nova tarefa na lista.
-
-- **URL**: `/todos`
-- **Método**: `POST`
-- **Corpo da requisição**:
-```json
-{
-  "title": "Tarefa 1",
-  "completed": false
-}
-```
-- **Resposta de exemplo**:
-```json
-{
-  "id": 3,
-  "title": "Tarefa 1",
-  "completed": false
-}
 ```
 
 ### Atualizar uma tarefa existente
 
 Atualiza os detalhes de uma tarefa existente.
 
-- **URL**: `/todos/{id}`
-- **Método**: `PUT`
-- **Parâmetros da URL**: 
+- **URL**: `/tasks/{id}`
+- **Método**: `PATCH`
+- **Parâmetros da URL**:
   - `id` (obrigatório) - O ID da tarefa que deseja atualizar.
 - **Corpo da requisição**:
+
 ```json
 {
-  "title": "Tarefa atualizada",
-  "completed": true
-}
-```
-- **Resposta de exemplo**:
-```json
-{
-  "id": 3,
-  "title": "Tarefa atualizada",
-  "completed": true
-}
-```
-
-### Excluir uma tarefa
-
-Remove uma tarefa da lista.
-
-- **URL**: `/todos/{id}`
-- **Método**: `DELETE`
-- **Parâmetros da URL**: 
-  - `id` (obrigatório) - O ID da tarefa que deseja excluir.
-- **Resposta de exemplo**:
-```json
-{
-  "message": "Tarefa removida com sucesso."
+  "is_completed": true
 }
 ```
 
