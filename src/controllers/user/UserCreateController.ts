@@ -4,10 +4,6 @@ import { errorHandler } from '../../utils/error/errorHandler'
 
 import * as yup from 'yup'
 
-interface YupValidationError extends yup.ValidationError {
-  path: string
-}
-
 const userCreateValidate = yup.object().shape({
   nickname: yup
     .string()
