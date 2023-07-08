@@ -1,5 +1,6 @@
 import { hash } from 'bcrypt'
 import { userRepository } from '../repositories/userRepository'
+import { IMessageResponse } from '../shared/types/IMessage'
 import { AppError } from '../utils/error/AppError'
 
 interface IUserCreateRequest {
@@ -8,8 +9,7 @@ interface IUserCreateRequest {
   email: string
 }
 
-interface IUserCreateResponse {
-  message: string
+interface IUserCreateResponse extends IMessageResponse {
   user: {
     id: string
     nickname: string

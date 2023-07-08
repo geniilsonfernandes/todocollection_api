@@ -1,6 +1,7 @@
 import { Collections } from '../entities/Collections'
 import { collectionsRepository } from '../repositories/collectionsRepository'
 import { userRepository } from '../repositories/userRepository'
+import { IMessageResponse } from '../shared/types/IMessage'
 import { AppError } from '../utils/error/AppError'
 
 interface ICollectionsCreateRequest {
@@ -17,14 +18,10 @@ interface ICollectionsUpdateRequest {
   }
 }
 
-interface ICollectionsResponse {
-  message: string
-}
-
 class CollectionsService {
   public async CreateCollection(
     data: ICollectionsCreateRequest,
-  ): Promise<ICollectionsResponse> {
+  ): Promise<IMessageResponse> {
     if (!data.description || !data.name) {
       throw new AppError('Missing parameters', 400)
     }
@@ -66,7 +63,7 @@ class CollectionsService {
 
   public async DeleteCollection(
     collection_id: string,
-  ): Promise<ICollectionsResponse> {
+  ): Promise<IMessageResponse> {
     const collection = await collectionsRepository.findOne({
       where: {
         id: collection_id,
@@ -87,15 +84,17 @@ class CollectionsService {
   public async UpdateCollection({
     collection_id,
     data,
-  }: ICollectionsUpdateRequest): Promise<ICollectionsResponse> {
+  }: ICollectionsUpdateRequest): Promise<IMessageResponse> {
     const { name, description } = data
 
     if (!name || !description) {
       throw new AppError('Missing required data', 400)
     }
 
-    const collection = await collectionsRepository.findOneBy({
-      id: collection_id,
+    const collection = await collectionsRepository.findOne({
+      where: {
+        id: collection_id,
+      },
     })
 
     if (!collection) {

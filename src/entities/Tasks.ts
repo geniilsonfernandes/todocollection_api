@@ -1,4 +1,12 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm'
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm'
 import { Collections } from './Collections'
 
 @Entity('tasks')
@@ -9,8 +17,23 @@ class Tasks {
   @Column()
   name: string
 
-  @OneToMany(() => Collections, (collection) => collection.user)
-  collections: Collections[]
+  @Column()
+  description: string
+
+  @Column({ default: false })
+  is_completed: boolean
+
+  @CreateDateColumn()
+  created_at: Date
+
+  @UpdateDateColumn()
+  updated_at: Date
+
+  @ManyToOne(() => Collections, (collection) => collection.tasks, {
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'collection_id' })
+  collections: Collections
 }
 
 export { Tasks }
