@@ -10,6 +10,13 @@ interface ITasksCreateRequest {
   collection_id: string
 }
 
+export interface ITasksUpdateRequest {
+  task_id: string
+  name: string
+  description: string
+  is_completed: boolean
+}
+
 class TasksService {
   public async CreateTask(
     data: ITasksCreateRequest,
@@ -65,12 +72,15 @@ class TasksService {
   }
 
   public async UpdateTask(
-    task_id: string,
-    data: ITasksCreateRequest,
+    data: ITasksUpdateRequest,
   ): Promise<IMessageResponse> {
+    if (!data.task_id) {
+      throw new AppError('Missing parameters', 400)
+    }
+
     const task = await tasksRepository.findOne({
       where: {
-        id: task_id,
+        id: data.task_id,
       },
     })
 
